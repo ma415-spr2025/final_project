@@ -15,17 +15,8 @@ library(dplyr)
 library(DT)
 library(plotly)
 
-# Sample data (replace with actual São Miguel data)
-demographics <- data.frame(
-  Category = c("Population", "Area (km²)", "Density (/km²)", "Primary Language", "Dominant Religion"),
-  Value = c("140,000", "746", "188", "Portuguese", "Roman Catholic")
-)
-
-climate_data <- data.frame(
-  Month = month.abb,
-  Temperature = c(14, 14, 15, 16, 18, 21, 24, 25, 23, 20, 17, 15),
-  Rainfall = c(110, 90, 75, 60, 45, 30, 25, 35, 50, 85, 100, 120)
-)
+# demographics <- need data
+# climate_data <- need data 
 
 # UI
 ui <- navbarPage(
