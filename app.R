@@ -10,30 +10,58 @@
 library(shiny)
 library(shinythemes)
 library(leaflet)
-library(ggplot2)
-library(dplyr)
 library(DT)
+library(ggplot2)
 library(plotly)
+library(slickR)
+library(shinyBS)
+library(wordcloud2)
 
-# demographics <- need data
-# climate_data <- need data 
+# === Data ===
+demographics <- data.frame(
+  Category = c("Population", "Area (km²)", "Primary Language", "Dominant Religion"),
+  Value = c("140,000", "759", "Portuguese", "Roman Catholic")
+)
 
-# UI
+islands <- data.frame(
+  Island = c("Sao Miguel", "Pico", "Terceira", "Sao Jorge", "Faial", "Flores", "Santa Maria", "Graciosa", "Corvo"), 
+  Area = c(759, 446, 403, 246, 173, 143, 97, 62, 17),
+  Population = c(133295, 13883, 53244, 8373, 14334, 3428, 5408, 4091, 384),
+  Dist_of_GDP = c(58.2, 5.0, 21.5, 3.3, 6.2, 1.3, 2.8, 1.5, 0.2)
+)
+
+climate_data <- data.frame(
+  Month = month.abb,
+  Temperature = c(52.4, 52.3, 56.5, 59.3, 63.8, 68.7, 70.7, 71.8, 69.5, 65.3, 57.7, 54.1),
+  Rainfall = c(62, 55, 60, 56, 37, 9, 2, 4, 25, 73, 72, 76)
+)
+
+# === UI ===
 ui <- navbarPage(
   title = "São Miguel Island, Azores",
   theme = shinytheme("cerulean"),
-  tags$head(
-    tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
-  ),
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
+  
   tabPanel("Overview",
            fluidPage(
              titlePanel("Welcome to São Miguel Island"),
              fluidRow(
-               column(6, img(src = "sao_miguel.jpg", width = "100%", alt = "São Miguel Island")),
+               column(6, img(src = "sao_miguel.jpg", width = "100%")),
                column(6,
                       h4("About the Island"),
                       p("São Miguel is the largest island in the Azores archipelago, located in the North Atlantic Ocean. Known as the 'Green Island', it features volcanic landscapes, crater lakes, and lush pastures."),
-                      tableOutput("demoTable")
+                      p("The Azores are a collection of Islands located in the Atlantic Ocean, 930 miles off the coast of Lisbon. The archipelago is made up of nine major islands and eight small Formigas, spanning 373 miles."),
+                      p("The islands were discovered by the Portuguese in 1427 during the Age of Exploration, and since then have played an important role as a layover point for ships moving between Europe and North America. 
+                        However, a number of hypogea have been found on the islands of Corvo, Santa Maria, and Terceira by an archaelogist, indicating a potential human presence pre-dating the Portuguese."),
+                      p("The islands are considered an autonomous region of Portugual, and their main economic exports are" ),
+                      bsCollapse(
+                        bsCollapsePanel("Fun Facts About São Miguel",
+                                        p("More cows than people — over 140,000!"),
+                                        p("Europe's only tea plantations are here."),
+                                        p("Pineapples grow in greenhouses."),
+                                        p("Meals are cooked in volcanic ground heat!")
+                        )
+                      )
                )
              )
            )
@@ -49,102 +77,133 @@ ui <- navbarPage(
   tabPanel("Climate",
            fluidPage(
              titlePanel("Climate Data"),
-             plotlyOutput("climatePlot"),
+             h4("Rainfall (mm)"),
+             plotlyOutput("rainfallPlot"),
              br(),
-             h5("São Miguel has a mild, oceanic climate with rainfall spread throughout the year and pleasant summer temperatures.")
+             h4("Temperature (°F)"),
+             plotlyOutput("temperaturePlot")
            )
+  ),
+  
+  tabPanel("Gallery",
+           titlePanel("Photo Gallery of São Miguel"),
+           slickROutput("imageGallery", width = "80%", height = "400px")
+  ),
+  
+  tabPanel("Language",
+           titlePanel("Common Portuguese Words"),
+           wordcloud2Output("wordCloud")
   ),
   
   tabPanel("Data Tables",
            fluidPage(
-             titlePanel("More Stats and Demographics"),
+             titlePanel("Stats and Demographics"),
              DTOutput("dataTable")
            )
   ),
   
-  tabPanel("Geology & Formation",
+  tabPanel("Geology",
            fluidPage(
              titlePanel("Geological Origins"),
-             p("São Miguel was formed by volcanic activity, with the oldest parts dating back around 4 million years. Its topography features calderas, fumaroles, and thermal springs."),
-             img(src = "map_sao_miguel.png", width = "100%", alt = "Geological Map")
+             p("São Miguel was formed by volcanic activity along the tectonic boundaries of the Eurasian, North American, and African plates. Its landscape is shaped by calderas, hot springs, and lava fields, making it a prime example of geothermal geomorphology."),
+             img(src = "map_sao_miguel.png", width = "100%")
            )
+  ),
+  
+  tabPanel("Island Comparisons",
+           titlePanel("Azores Islands Data Comparison"),
+           plotlyOutput("popPlot"),
+           plotlyOutput("areaPlot"),
+           plotlyOutput("gdpPie"),
+           plotlyOutput("scatterPlot"),
+           plotlyOutput("bubblePlot")
   )
 )
 
-# Server
+# === Server ===
 server <- function(input, output, session) {
-  output$demoTable <- renderTable({
-    demographics
-  })
+  output$dataTable <- renderDT({ datatable(demographics) })
   
   output$map <- renderLeaflet({
     leaflet() %>%
       addTiles() %>%
-      setView(lng = -25.5, lat = 37.8, zoom = 8) %>%
-      addMarkers(lng = -25.5, lat = 37.8, popup = "São Miguel Island")
+      setView(lng = -25.5, lat = 37.8, zoom = 9) %>%
+      addMarkers(lng = -25.78, lat = 37.87, 
+                 popup = "<b>Sete Cidades</b><br><img src='sete_cidades.jpg' width='200px'>") %>%
+      addMarkers(lng = -25.48, lat = 37.77, 
+                 popup = "<b>Lagoa do Fogo</b><br><img src='lagoa_fogo.jpg' width='200px'>") %>%
+      addMarkers(lng = -25.67, lat = 37.73, 
+                 popup = "<b>Furnas</b><br><img src='furnas.jpg' width='200px'>")
   })
   
-  output$climatePlot <- renderPlotly({
-    p <- ggplot(climate_data, aes(x = Month)) +
-      geom_bar(aes(y = Rainfall), stat = "identity", fill = "skyblue") +
-      geom_line(aes(y = Temperature * 5, group = 1), color = "red", size = 1) +  # Scaled to match
-      scale_y_continuous(
-        name = "Rainfall (mm)",
-        sec.axis = sec_axis(~./5, name = "Temperature (°C)")
-      ) +
-      labs(title = "Monthly Climate Overview") +
+  output$rainfallPlot <- renderPlotly({
+    p <- ggplot(climate_data, aes(x = Month, y = Rainfall)) +
+      geom_col(fill = "skyblue") +
+      labs(title = "Monthly Rainfall", y = "Rainfall (mm)", x = "Month") +
       theme_minimal()
-    
     ggplotly(p)
   })
   
-  output$dataTable <- renderDT({
-    datatable(demographics, options = list(pageLength = 5, dom = 'tp'))
+  output$temperaturePlot <- renderPlotly({
+    p <- ggplot(climate_data, aes(x = Month, y = Temperature)) +
+      geom_line(color = "tomato", size = 1.2) +
+      geom_point(color = "tomato", size = 2) +
+      labs(title = "Monthly Temperature", y = "Temperature (°F)", x = "Month") +
+      theme_minimal()
+    ggplotly(p)
+  })
+  
+  output$imageGallery <- renderSlickR({
+    slickR(c("gallery1.jpg", "gallery2.jpg", "gallery3.jpg"))
+  })
+  
+  output$wordCloud <- renderWordcloud2({
+    words <- data.frame(
+      word = c("olá", "obrigado", "ilha", "vulcão", "lagoa", "chá", "ananas", "verde", "mar", "caldeira"),
+      freq = c(20, 15, 13, 12, 11, 10, 9, 8, 7, 6)
+    )
+    wordcloud2(words, size = 1.2, color = "random-light")
+  })
+  
+  output$popPlot <- renderPlotly({
+    p <- ggplot(islands, aes(x = reorder(Island, -Population), y = Population)) +
+      geom_col(fill = "steelblue") +
+      labs(title = "Population by Island", x = "Island", y = "Population") +
+      theme_minimal()
+    ggplotly(p)
+  })
+  
+  output$areaPlot <- renderPlotly({
+    p <- ggplot(islands, aes(x = reorder(Island, -Area), y = Area)) +
+      geom_col(fill = "forestgreen") +
+      labs(title = "Area by Island", x = "Island", y = "Area (km²)") +
+      theme_minimal()
+    ggplotly(p)
+  })
+  
+  output$gdpPie <- renderPlotly({
+    plot_ly(data = islands, labels = ~Island, values = ~Dist_of_GDP, type = 'pie',
+            textinfo = 'label+percent', insidetextorientation = 'radial') %>%
+      layout(title = "GDP Contribution by Island")
+  })
+  
+  output$scatterPlot <- renderPlotly({
+    p <- ggplot(islands, aes(x = Area, y = Population, text = Island)) +
+      geom_point(color = "darkorange", size = 4) +
+      labs(title = "Area vs Population", x = "Area (km²)", y = "Population") +
+      theme_minimal()
+    ggplotly(p, tooltip = "text")
+  })
+  
+  output$bubblePlot <- renderPlotly({
+    p <- ggplot(islands, aes(x = Population, y = Dist_of_GDP, size = Area, text = Island)) +
+      geom_point(alpha = 0.7, color = "purple") +
+      labs(title = "Population vs GDP Contribution", x = "Population", y = "GDP Contribution (%)") +
+      theme_minimal()
+    ggplotly(p, tooltip = "text")
   })
 }
 
-# Run the application
-shinyApp(ui = ui, server = server)
+# === Run App ===
+shinyApp(ui, server)
 
-
-
-# Define UI for application that draws a histogram
-#ui <- fluidPage(
-
-    # Application title
-    #titlePanel("Old Faithful Geyser Data"),
-
-    # Sidebar with a slider input for number of bins 
-    #sidebarLayout(
-       # sidebarPanel(
-      #      sliderInput("bins",
-     #                   "Number of bins:",
-    #                    min = 1,
-   #                     max = 50,
-  #                      value = 30)
- #       ),
-#
-        # Show a plot of the generated distribution
-    #    mainPanel(
-   #        plotOutput("distPlot")
-  #      )
- #   )
-#)
-
-# Define server logic required to draw a histogram
-#server <- function(input, output) {
-#
-  #  output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-     #   x    <- faithful[, 2]
-      #  bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-      #  hist(x, breaks = bins, col = 'darkgray', border = 'white',
-       #      xlab = 'Waiting time to next eruption (in mins)',
-        #     main = 'Histogram of waiting times')
-    #})
-#}
-
-# Run the application 
-#shinyApp(ui = ui, server = server)
