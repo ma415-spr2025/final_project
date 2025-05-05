@@ -34,13 +34,21 @@ climate_data <- data.frame(
 
 # === UI ===
 ui <- navbarPage(
-  title = div(
-    img(src = "azores_flag.png", height = "30px", style = "margin-right:10px; vertical-align: middle;"),
-    span("São Miguel Island, Azores", style = "vertical-align: middle;")
+  title = tags$div(
+    img(src = "azores_flag.svg", class = "flag-icon"),
+    tags$span("São Miguel Island, Azores", style = "vertical-align:middle; font-weight:bold; font-size: 20px;")
   ),
   theme = shinytheme("cerulean"),
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
-  
+  tags$style(HTML("
+  .azores-flag-navbar {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    height: 30px;
+  }
+")),
+  tags$img(src = "azores_flag.svg", class = "azores-flag-navbar"),
   tabPanel("Overview",
            fluidPage(
              titlePanel("Welcome to São Miguel Island"),
@@ -53,7 +61,6 @@ ui <- navbarPage(
                           p("São Miguel’s natural beauty is unmatched — crater lakes like Lagoa das Sete Cidades, thermal hot springs in Furnas, and dramatic coastlines make it a nature-lover's paradise.")
                       ),
                       br(),
-                      img(src = "azores_flag.png", width = "120px", style = "margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;")
                ),
                column(6,
                 div(class = "card",
@@ -123,6 +130,12 @@ ui <- navbarPage(
            plotlyOutput("gdpPie"),
            plotlyOutput("scatterPlot"),
            plotlyOutput("bubblePlot")
+  ),
+  tags$footer(
+    class = "footer",
+    style = "text-align: center; padding: 10px; background-color: #e8f5f9;",
+    tags$img(src = "azores_flag.svg", class = "flag-icon"),
+    tags$p("© 2025 São Miguel Explorer • Built with Shiny", style = "margin: 5px; font-size: 0.9em; color: #555;")
   )
 )
 

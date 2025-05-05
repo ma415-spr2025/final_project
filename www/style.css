@@ -1,126 +1,92 @@
 /* www/style.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500&display=swap');
+/* Import clean modern fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
 body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: #eef6f5;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f0f9f7; /* light aqua */
   color: #1a313b;
-  line-height: 1.6;
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  color: #007e6c;
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: #0a5f5f;
 }
 
+/* Navbar Styling */
 .navbar {
-  background-color: #007e6c !important;
-  border-bottom: 3px solid #56c4b5;
+  background-color: #a9dff7 !important; /* light blue */
+  border-bottom: 2px solid #65b7c5;
 }
 
-.navbar-default .navbar-brand,
-.navbar-default .navbar-nav > li > a {
-  color: white !important;
-  font-weight: 600;
+.navbar-brand {
+  font-weight: bold;
+  font-size: 20px;
+  color: #0a5f5f !important;
 }
 
-a {
-  color: #007e6c;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #005f53;
-}
-
+/* Images */
 img {
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 8px;
   max-width: 100%;
+  height: auto;
+}
+
+/* Custom Card Styling */
+.card {
+  background-color: #e6f2ef; /* soft green-blue */
+  border: 1px solid #a0cfc0;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   margin-bottom: 20px;
 }
 
-/* Panels (e.g., Fun Facts) */
-.panel-default > .panel-heading {
-  background-color: #a9dff7;
-  color: #1a313b;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px 10px 0 0;
-  padding: 12px 15px;
-}
-
-.panel-default {
-  border: 1px solid #56c4b5;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 20px;
-}
-
-.panel-body {
-  background-color: white;
-  padding: 15px;
-}
-
-/* Cards for content grouping */
-.card {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  padding: 20px;
-  margin-bottom: 30px;
-}
-
-/* Buttons */
-.btn {
-  background-color: #007e6c;
-  color: white;
-  border: none;
+/* Fun Fact Dropdown Styling */
+.panel-heading {
+  background-color: #d6f5f5 !important;
   border-radius: 6px;
-  font-weight: 600;
+  padding: 10px;
 }
 
-.btn:hover {
-  background-color: #005f53;
+.panel-title a {
+  font-weight: bold;
+  color: #0a5f5f !important;
+  text-decoration: none;
 }
 
-/* Tables */
-table.dataTable {
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
+.panel-title a:hover {
+  text-decoration: underline;
 }
 
-/* Plot title alignment */
-.plot-title {
-  font-weight: 600;
-  margin-top: 20px;
-  color: #007e6c;
+/* Optional: Button, Link and Footer Colors */
+a, .btn {
+  color: #0a5f5f;
 }
 
-/* Custom divider */
-.divider {
-  border-top: 2px solid #a9dff7;
-  margin: 30px 0;
+a:hover, .btn:hover {
+  color: #063c3c;
 }
 
-/* Footer (if added later) */
-footer {
-  background-color: #007e6c;
-  color: white;
-  text-align: center;
-  padding: 15px;
-  font-size: 14px;
-  margin-top: 40px;
-}
-.card {
-  background-color: #e6f5f2;
-  border: 1px solid #c3e6cb;
+/* Optional: Wordcloud container (if needed) */
+.wordcloud-container {
+  background-color: #f0fcfc;
+  border: 1px solid #cdeaea;
   border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+
+/* Flag styling (if reused outside of navbar) */
+.flag-icon {
+  width: 50px;  /* adjust this value to make the flag smaller */
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.azores-flag-navbar {
+  height: 20px; /* smaller flag size */
+  width: auto;  /* auto-adjust width to maintain aspect ratio */
 }
