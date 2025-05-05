@@ -18,10 +18,6 @@ library(shinyBS)
 library(wordcloud2)
 
 # === Data ===
-demographics <- data.frame(
-  Category = c("Population", "Area (km²)", "Primary Language", "Dominant Religion"),
-  Value = c("140,000", "759", "Portuguese", "Roman Catholic")
-)
 
 islands <- data.frame(
   Island = c("Sao Miguel", "Pico", "Terceira", "Sao Jorge", "Faial", "Flores", "Santa Maria", "Graciosa", "Corvo"), 
@@ -38,7 +34,10 @@ climate_data <- data.frame(
 
 # === UI ===
 ui <- navbarPage(
-  title = "São Miguel Island, Azores",
+  title = div(
+    img(src = "azores_flag.png", height = "30px", style = "margin-right:10px; vertical-align: middle;"),
+    span("São Miguel Island, Azores", style = "vertical-align: middle;")
+  ),
   theme = shinytheme("cerulean"),
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
   
@@ -46,15 +45,27 @@ ui <- navbarPage(
            fluidPage(
              titlePanel("Welcome to São Miguel Island"),
              fluidRow(
-               column(6, img(src = "sao_miguel.jpg", width = "100%")),
                column(6,
+                      img(src = "sao_miguel.jpg", width = "100%"),
+                      br(),
+                      div(class = "card", style = "padding: 15px; margin-top: 10px;",
+                          h4("Lush Landscapes and Volcanic Beauty"),
+                          p("São Miguel’s natural beauty is unmatched — crater lakes like Lagoa das Sete Cidades, thermal hot springs in Furnas, and dramatic coastlines make it a nature-lover's paradise.")
+                      ),
+                      br(),
+                      img(src = "azores_flag.png", width = "120px", style = "margin-top: 10px; border: 1px solid #ccc; border-radius: 5px;")
+               ),
+               column(6,
+                div(class = "card",
                       h4("About the Island"),
                       p("São Miguel is the largest island in the Azores archipelago, located in the North Atlantic Ocean. Known as the 'Green Island', it features volcanic landscapes, crater lakes, and lush pastures."),
                       p("The Azores are a collection of Islands located in the Atlantic Ocean, 930 miles off the coast of Lisbon. The archipelago is made up of nine major islands and eight small Formigas, spanning 373 miles."),
                       p("The islands were discovered by the Portuguese in 1427 during the Age of Exploration, and since then have played an important role as a layover point for ships moving between Europe and North America. 
                         However, a number of hypogea have been found on the islands of Corvo, Santa Maria, and Terceira by an archaelogist, indicating a potential human presence pre-dating the Portuguese."),
                       p("The islands are considered an autonomous region of Portugual, and their economy functions mostly on eco-tourism!" ),
-                      bsCollapse(
+                      ),
+                div(class = "card",
+                bsCollapse(
                         bsCollapsePanel("Fun Facts About São Miguel",
                                         p("More cows than people — over 140,000!"),
                                         p("Europe's only tea plantations are here."),
@@ -62,6 +73,7 @@ ui <- navbarPage(
                                         p("Meals are cooked in volcanic ground heat!")
                         )
                       )
+               )
                )
              )
            )
@@ -95,12 +107,6 @@ ui <- navbarPage(
            wordcloud2Output("wordCloud")
   ),
   
-  tabPanel("Data Tables",
-           fluidPage(
-             titlePanel("Stats and Demographics"),
-             DTOutput("dataTable")
-           )
-  ),
   
   tabPanel("Geology",
            fluidPage(
@@ -154,7 +160,7 @@ server <- function(input, output, session) {
   })
   
   output$imageGallery <- renderSlickR({
-    slickR(c("gallery1.jpg", "gallery2.jpg", "gallery3.jpg"))
+    slickR(c("gallery1.jpg", "gallery2.jpg", "gallery3.jpg", "gallery4.jpg", "gallery5.jpg"))
   })
   
   output$wordCloud <- renderWordcloud2({

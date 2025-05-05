@@ -1,91 +1,126 @@
 /* www/style.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&family=Quicksand:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500&display=swap');
 
 body {
-  font-family: 'Quicksand', sans-serif;
-  background-color: #e8f7f1;  /* Light greenish background to evoke nature */
-  color: #2f3e46;  /* Darker shade for better contrast */
+  font-family: 'Open Sans', sans-serif;
+  background-color: #eef6f5;
+  color: #1a313b;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
 }
 
 h1, h2, h3 {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  color: #006f80;  /* Deep ocean blue for headings */
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #007e6c;
 }
 
 .navbar {
-  background-color: #56c1a5 !important;  /* Soft green color representing the island's lush vegetation */
-  color: white !important;
+  background-color: #007e6c !important;
+  border-bottom: 3px solid #56c4b5;
 }
 
-.navbar a {
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a {
   color: white !important;
+  font-weight: 600;
 }
 
-.navbar a:hover {
-  color: #1a4d66 !important;  /* Darker blue when hovering to maintain harmony */
+a {
+  color: #007e6c;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #005f53;
 }
 
 img {
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   max-width: 100%;
-  border: 3px solid #56c1a5;  /* Subtle green border around images */
+  margin-bottom: 20px;
 }
 
-h4 {
-  color: #006f80;  /* Heading color matching the theme */
-}
-
-.bs-collapse-panel {
-  background-color: #b3e0d7 !important;  /* Pale green background for the collapse panels */
+/* Panels (e.g., Fun Facts) */
+.panel-default > .panel-heading {
+  background-color: #a9dff7;
+  color: #1a313b;
+  font-weight: 600;
   border: none;
+  border-radius: 10px 10px 0 0;
+  padding: 12px 15px;
+}
+
+.panel-default {
+  border: 1px solid #56c4b5;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.panel-body {
+  background-color: white;
   padding: 15px;
 }
 
-.bs-collapse-panel p {
-  font-size: 14px;
-  color: #2f3e46;  /* Keep the text readable and harmonious */
+/* Cards for content grouping */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  padding: 20px;
+  margin-bottom: 30px;
 }
 
-.panel-title {
-  color: #004d5b !important;  /* Deep blue to keep the panel heading in line with the theme */
-}
-
-button {
-  background-color: #1a4d66 !important;  /* Ocean-inspired button background */
-  color: white !important;
-  border-radius: 5px;
+/* Buttons */
+.btn {
+  background-color: #007e6c;
+  color: white;
   border: none;
-  padding: 10px 15px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-weight: 600;
 }
 
-button:hover {
-  background-color: #003d4d !important;  /* Darker shade for hover effect */
+.btn:hover {
+  background-color: #005f53;
 }
 
-table {
-  background-color: #f1f1f1;
-  border-collapse: collapse;
-  width: 100%;
+/* Tables */
+table.dataTable {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-th, td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+/* Plot title alignment */
+.plot-title {
+  font-weight: 600;
+  margin-top: 20px;
+  color: #007e6c;
 }
 
-th {
-  background-color: #56c1a5 !important;  /* Green header for tables */
-  color: white !important;
+/* Custom divider */
+.divider {
+  border-top: 2px solid #a9dff7;
+  margin: 30px 0;
 }
 
-tr:nth-child(even) {
-  background-color: #f7f7f7;
+/* Footer (if added later) */
+footer {
+  background-color: #007e6c;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  margin-top: 40px;
 }
-
-tr:hover {
-  background-color: #d0e8e0;  /* Subtle highlight on row hover */
+.card {
+  background-color: #e6f5f2;
+  border: 1px solid #c3e6cb;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
