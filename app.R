@@ -53,7 +53,7 @@ ui <- navbarPage(
                       p("The Azores are a collection of Islands located in the Atlantic Ocean, 930 miles off the coast of Lisbon. The archipelago is made up of nine major islands and eight small Formigas, spanning 373 miles."),
                       p("The islands were discovered by the Portuguese in 1427 during the Age of Exploration, and since then have played an important role as a layover point for ships moving between Europe and North America. 
                         However, a number of hypogea have been found on the islands of Corvo, Santa Maria, and Terceira by an archaelogist, indicating a potential human presence pre-dating the Portuguese."),
-                      p("The islands are considered an autonomous region of Portugual, and their main economic exports are" ),
+                      p("The islands are considered an autonomous region of Portugual, and their economy functions mostly on eco-tourism!" ),
                       bsCollapse(
                         bsCollapsePanel("Fun Facts About São Miguel",
                                         p("More cows than people — over 140,000!"),
@@ -206,4 +206,5 @@ server <- function(input, output, session) {
 
 # === Run App ===
 shinyApp(ui, server)
+
 
