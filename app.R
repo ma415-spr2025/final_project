@@ -58,7 +58,8 @@ ui <- navbarPage(
                       br(),
                       div(class = "card", style = "padding: 15px; margin-top: 10px;",
                           h4("Lush Landscapes and Volcanic Beauty"),
-                          p("São Miguel’s natural beauty is unmatched — crater lakes like Lagoa das Sete Cidades, thermal hot springs in Furnas, and dramatic coastlines make it a nature-lover's paradise.")
+                          p("São Miguel’s natural beauty is unmatched — crater lakes like Lagoa das Sete Cidades, thermal hot springs in Furnas, and dramatic coastlines make it a nature-lover's paradise.The islands are committed to sustainable tourism, and over 25% of their land is designated as 
+                            Protected Areas that are set aside for conservation. The Azores began implementing Marine Protected Areas in the 1980s, the first being established in Faial, and now there are over 110,000 square kilometers of Marine Protected Areas across the Islands. The goal of these protected areas is to conserve marine biodiversity, habitats, and ecosystems.")
                       ),
                       br(),
                ),
@@ -113,7 +114,9 @@ ui <- navbarPage(
   tabPanel("Geology",
            fluidPage(
              titlePanel("Geological Origins"),
-             p("São Miguel was formed by volcanic activity along the tectonic boundaries of the Eurasian, North American, and African plates. Its landscape is shaped by calderas, hot springs, and lava fields, making it a prime example of geothermal geomorphology."),
+             p("São Miguel was formed by volcanic activity along the tectonic boundaries of the Eurasian, North American, and African plates. Its landscape is shaped by calderas, hot springs, and lava fields, making it a prime example of geothermal geomorphology.
+               Some of the volcanoes formed over 4 million years ago by the plates pushing against each other, and the island is home to many fault lines, as well as eight different geomorphological features. 
+               These include Sete Cidades Massif, the Picos Volcanic System, the Agua de Pau Massif, and the Furnas Volcano. The last volcanic eruption took place in the 17th century, and the most famous eruption was called Fogo 2 and it occurred in 1652."),
              img(src = "map_sao_miguel.png", width = "100%")
            )
   ),
@@ -134,7 +137,8 @@ ui <- navbarPage(
              p(a("São Miguel Climate Data – Climate-Data.org", href = "https://en.climate-data.org/europe/portugal/sao-miguel/sao-miguel-290075/", target = "_blank")),
              p(a("Azores – Wikipedia", href = "https://en.wikipedia.org/wiki/Azores", target = "_blank")),
              p(a("Azores and the EU – European Parliament", href = "https://www.europarl.europa.eu/RegData/etudes/BRIE/2017/601971/IPOL_BRI(2017)601971_EN.pdf", target = "_blank")),
-             p(a("São Miguel Island – Wikipedia", href = "https://en.wikipedia.org/wiki/S%C3%A3o_Miguel_Island", target = "_blank"))
+             p(a("São Miguel Island – Wikipedia", href = "https://en.wikipedia.org/wiki/S%C3%A3o_Miguel_Island", target = "_blank")),
+             p(a("Marine Protected Areas - CCMAR", href = "https://web.archive.org/web/20231205041627/https://www.ccmar.ualg.pt/en/page/marine-protected-areas", target = "_blank"))
            )
   ),
   
