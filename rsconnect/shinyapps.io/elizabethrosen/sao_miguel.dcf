@@ -1,0 +1,12 @@
+name: sao_miguel
+title: sao_miguel
+username: elizabethrosen
+account: elizabethrosen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14698363
+bundleId: 10240389
+url: https://elizabethrosen.shinyapps.io/sao_miguel/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
