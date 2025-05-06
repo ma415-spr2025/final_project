@@ -109,11 +109,6 @@ ui <- navbarPage(
            slickROutput("imageGallery", width = "80%", height = "400px")
   ),
   
-  tabPanel("Language",
-           titlePanel("Common Portuguese Words"),
-           wordcloud2Output("wordCloud")
-  ),
-  
   
   tabPanel("Geology",
            fluidPage(
@@ -131,11 +126,24 @@ ui <- navbarPage(
            plotlyOutput("scatterPlot"),
            plotlyOutput("bubblePlot")
   ),
+  
+  tabPanel("Sources",
+           fluidPage(
+             titlePanel("Sources"),
+             p(a("History of São Miguel – Azores.com", href = "https://azores.com/azores/islands/sao-miguel/history-2", target = "_blank")),
+             p(a("São Miguel Climate Data – Climate-Data.org", href = "https://en.climate-data.org/europe/portugal/sao-miguel/sao-miguel-290075/", target = "_blank")),
+             p(a("Azores – Wikipedia", href = "https://en.wikipedia.org/wiki/Azores", target = "_blank")),
+             p(a("Azores and the EU – European Parliament", href = "https://www.europarl.europa.eu/RegData/etudes/BRIE/2017/601971/IPOL_BRI(2017)601971_EN.pdf", target = "_blank")),
+             p(a("São Miguel Island – Wikipedia", href = "https://en.wikipedia.org/wiki/S%C3%A3o_Miguel_Island", target = "_blank"))
+           )
+  ),
+  
+  
   tags$footer(
     class = "footer",
     style = "text-align: center; padding: 10px; background-color: #e8f5f9;",
     tags$img(src = "azores_flag.svg", class = "flag-icon"),
-    tags$p("© 2025 São Miguel Explorer • Built with Shiny", style = "margin: 5px; font-size: 0.9em; color: #555;")
+    tags$p("Built with Shiny", style = "margin: 5px; font-size: 0.9em; color: #555;")
   )
 )
 
@@ -157,7 +165,7 @@ server <- function(input, output, session) {
   
   output$rainfallPlot <- renderPlotly({
     p <- ggplot(climate_data, aes(x = Month, y = Rainfall)) +
-      geom_col(fill = "skyblue") +
+      geom_col(fill = "lightblue3") +
       labs(title = "Monthly Rainfall", y = "Rainfall (mm)", x = "Month") +
       theme_minimal()
     ggplotly(p)
@@ -165,8 +173,8 @@ server <- function(input, output, session) {
   
   output$temperaturePlot <- renderPlotly({
     p <- ggplot(climate_data, aes(x = Month, y = Temperature)) +
-      geom_line(color = "tomato", size = 1.2) +
-      geom_point(color = "tomato", size = 2) +
+      geom_line(color = "darkolivegreen3", size = 1.2) +
+      geom_point(color = "darkolivegreen3", size = 2) +
       labs(title = "Monthly Temperature", y = "Temperature (°F)", x = "Month") +
       theme_minimal()
     ggplotly(p)
@@ -176,17 +184,10 @@ server <- function(input, output, session) {
     slickR(c("gallery1.jpg", "gallery2.jpg", "gallery3.jpg", "gallery4.jpg", "gallery5.jpg"))
   })
   
-  output$wordCloud <- renderWordcloud2({
-    words <- data.frame(
-      word = c("olá", "obrigado", "ilha", "vulcão", "lagoa", "chá", "ananas", "verde", "mar", "caldeira"),
-      freq = c(20, 15, 13, 12, 11, 10, 9, 8, 7, 6)
-    )
-    wordcloud2(words, size = 1.2, color = "random-light")
-  })
   
   output$popPlot <- renderPlotly({
     p <- ggplot(islands, aes(x = reorder(Island, -Population), y = Population)) +
-      geom_col(fill = "steelblue") +
+      geom_col(fill = "cadetblue2") +
       labs(title = "Population by Island", x = "Island", y = "Population") +
       theme_minimal()
     ggplotly(p)
@@ -208,7 +209,7 @@ server <- function(input, output, session) {
   
   output$scatterPlot <- renderPlotly({
     p <- ggplot(islands, aes(x = Area, y = Population, text = Island)) +
-      geom_point(color = "darkorange", size = 4) +
+      geom_point(color = "deeppink2", size = 4) +
       labs(title = "Area vs Population", x = "Area (km²)", y = "Population") +
       theme_minimal()
     ggplotly(p, tooltip = "text")
@@ -216,7 +217,7 @@ server <- function(input, output, session) {
   
   output$bubblePlot <- renderPlotly({
     p <- ggplot(islands, aes(x = Population, y = Dist_of_GDP, size = Area, text = Island)) +
-      geom_point(alpha = 0.7, color = "purple") +
+      geom_point(alpha = 0.7, color = "orchid3") +
       labs(title = "Population vs GDP Contribution", x = "Population", y = "GDP Contribution (%)") +
       theme_minimal()
     ggplotly(p, tooltip = "text")
